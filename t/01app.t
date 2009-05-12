@@ -39,10 +39,10 @@ foreach my $username (keys %users) {
     }
 
     {
-        my $req = GET('/books/list', Cookie => $cookie) ;
-        my ($res, $ctx) = ctx_request( GET('/books/form_create', Cookie => $cookie) );
-        like($res->content, qr|Unauthorized|, 'User is authorized to create books') if !$admin;
-        like($res->content, qr|form_create_do|, 'Can see create book form') if $admin;
+        my ($res, $ctx) = ctx_request( GET('/books/url_create/foo/bar/baz', Cookie => $cookie) );
+        my $unauth = $res->content =~ /Unauthorized/;
+        ok(! $unauth, $username . ' is authorized to create books') if $admin;
+        ok( $unauth, $username . ' is not authorized to create books') if !$admin;
     }
 }
 

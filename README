@@ -1,6 +1,13 @@
 20:12 < krg> in the manual::tutorial::authorization section 'Try Out Authentication And Authorization' getting unauthorized for user test01
 20:12 < krg> can someone help me out?
 
+http://localhost:3000/books/url_create/foo/bar/baz
+
+Should work for test01, and give 'Unauthorized' for other users.
+
+Password is mypass
+
 Run script/myapp_server.pl to test the application.
 
+Run perl -Ilib t/01app.t to see the failing test.
 
