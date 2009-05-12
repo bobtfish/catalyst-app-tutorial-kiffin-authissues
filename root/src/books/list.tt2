@@ -1,0 +1,67 @@
+[% # This is a TT comment.  The '-' at the end "chomps" the newline.  You won't -%]
+[% # see this "chomping" in your browser because HTML ignores blank lines, but  -%]
+[% # it WILL eliminate a blank line if you view the HTML source.  It's purely   -%]
+[%- # optional, but both the beginning and the ending TT tags support chomping. -%]
+
+[%- # optional, but both the beginning and the ending TT tags support chomping. -%]
+
+[% # Provide a title -%]
+[% META title = 'Book List' -%]
+
+<table>
+<tr><th>Title</th><th>Rating</th><th>Author(s)</th></tr>
+[% # Display each book in a table row %]
+[% FOREACH book IN books -%]
+<tr>
+  <td>[% book.title %]</td>
+  <td>[% book.rating %]</td>
+  <td>
+     [% # First initialize a TT variable to hold a list.  Then use a TT FOREACH -%]
+     [% # loop in 'side effect notation' to load just the last names of the     -%]
+     [% # authors into the list. Note that the 'push' TT vmethod does not print -%]
+     [% # a value, so nothing will be printed here.  But, if you have something -%]
+     [% # in TT that does return a method and you don't want it printed, you    -%]
+     [% # can: 1) assign it to a bogus value, or 2) use the CALL keyword to     -%]
+     [% # call it and discard the return value.                                 -%]
+     [% tt_authors = [ ];
+        tt_authors.push(author.last_name) FOREACH author = book.author %]
+     [% # Now use a TT 'virtual method' to display the author count in parens   -%]
+     [% # Note the use of the TT filter "| html" to escape dangerous characters -%]
+     ([% tt_authors.size | html %])
+     [% # Use another TT vmethod to join & print the names & comma separators   -%]
+     [% tt_authors.join(', ') | html %]
+   </td>
+   <td>
+     [% # Add a link to delete a book %]
+     <a href="[% c.uri_for(c.controller.action_for('delete'), [book.id]) %]">Delete</a>
+   </td>
+</tr>
+[% END -%]
+</table>
+
+<p>
+  <a href="[% c.uri_for('/login') %]">Login</a>
+  <a href="[% c.uri_for(c.controller.action_for('form_create')) %]">Create</a>
+</p>
+
+<p>Hello [% c.user.username %], you have the following roles:</p>
+   
+<ul>
+[% # Dump list of roles -%]
+  [% FOR role = c.user.role %]<li>[% role %]</li>[% END %]
+</ul>
+
+<p>
+[% # Add some simple role-specific logic to template %]
+[% # Use $c->check_user_roles() to check authz -%]
+[% IF c.check_user_roles('user') %]
+  [% # Give normal users a link for 'logout' %]
+  <a href="[% c.uri_for('/logout') %]">User Logout</a>
+[% END %]
+
+[% # Can also use $c->user->check_roles() to check authz -%]
+[% IF c.check_user_roles('admin') %]
+  [% # Give admin users a link for 'create' %]
+  <a href="[% c.uri_for(c.controller.action_for('form_create')) %]">Admin Create</a>
+[% END %]
+</p>
