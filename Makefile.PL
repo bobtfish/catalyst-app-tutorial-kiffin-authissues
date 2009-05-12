@@ -22,6 +22,8 @@ requires 'Catalyst::Plugin::Session';
 requires 'Catalyst::Plugin::Session::Store::FastMmap';
 requires 'Catalyst::Plugin::Session::State::Cookie';
 
+requires 'Catalyst::Authentication::Realm::SimpleDB';
+
 catalyst;
 
 install_script glob('script/*.pl');
