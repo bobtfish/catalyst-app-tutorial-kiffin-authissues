@@ -1,7 +1,12 @@
 use strict;
 use warnings;
-use Test::More tests => 2;
+use Test::More tests => 3;
 
 BEGIN { use_ok 'Catalyst::Test', 'MyApp' }
 
-ok( request('/')->is_success, 'Request should succeed' );
+{
+    my $res = request('/');
+    is( $res->code, 302, 'Request / redirect' );
+    like( $res->header('Location'), qr/login/, 'redirect to /login');
+}
+
