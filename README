@@ -1,1 +1,6 @@
+20:12 < krg> in the manual::tutorial::authorization section 'Try Out Authentication And Authorization' getting unauthorized for user test01
+20:12 < krg> can someone help me out?
+
 Run script/myapp_server.pl to test the application.
+
+
