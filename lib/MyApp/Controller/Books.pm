@@ -212,7 +212,7 @@ sub list_recent :Chained('base') :PathPart('list_recent') :Args(1) {
     $c->stash->{template} = 'books/list.tt2';
 }
 
-=Head1 AUTHOR
+=head1 AUTHOR
 
 Kiffin Gish,,,
 
