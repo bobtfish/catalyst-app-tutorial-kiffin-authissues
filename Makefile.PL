@@ -24,6 +24,11 @@ requires 'Catalyst::Plugin::Session::State::Cookie';
 
 requires 'Catalyst::Authentication::Realm::SimpleDB';
 
+requires 'DBIx::Class::EncodedColumn';
+requires 'DBIx::Class::TimeStamp';
+requires 'Catalyst::Model::DBIC::Schema';
+requires 'Catalyst::View::TT';
+
 catalyst;
 
 install_script glob('script/*.pl');
