@@ -99,6 +99,6 @@ __PACKAGE__->has_many(map_user_role => 'MyApp::Schema::Result::UserRole', 'user_
 #     2) Name of has_many() relationship this many_to_many() is shortcut for
 #     3) Name of belongs_to() relationship in model class of has_many() above
 #   You must already have the has_many() defined to use a many_to_many().
-__PACKAGE__->many_to_many(role => 'map_user_role', 'role');
+__PACKAGE__->many_to_many(roles => 'map_user_role', 'role');
 
 1;

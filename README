@@ -9,7 +9,3 @@ Password is mypass
 
 Run script/myapp_server.pl to test the application.
 
-Run perl -Ilib t/01app.t to see the failing test.
-
-[error] Caught exception in MyApp::Controller::Books->url_create "Can't locate object method "roles" via package "MyApp::Model::DB::User" at /Users/t0m/perl5/lib/perl5/Catalyst/Authentication/Store/DBIx/Class/User.pm line 136."
-
