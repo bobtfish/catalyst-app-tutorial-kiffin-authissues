@@ -63,12 +63,13 @@ sub url_create : Chained('base') :PathPart('url_create') :Args(3)  {
     my ($self, $c, $title, $rating, $author_id) = @_;
 
     # Check the user's roles
-    use Devel::Peek; # First suspect where check_user_roles method comes from.
-    use Data::Dump;
-    Data::Dump::dump(Dump($c->can('check_user_roles')));
-    if ($c->check_user_roles('admin')) {
-        warn("User is admin");
-        warn Data::Dump::dump($c->user);
+    eval { $c->assert_user_roles('admin') };
+    my $has_role = 1;
+    if ($@) {
+        die $@ unless $@ =~ /Missing roles/;
+        $has_role = 0;
+    }
+    if ($has_role) {
         # Call create() on the book model object. Pass the table
         # columns/field values we want to set as hash values
         my $book = $c->model('DB::Book')->create({
